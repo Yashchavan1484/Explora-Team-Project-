@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAN.YOUR.TRIP</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/homepage/homepage.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/plan-your-trip/plan-your-trip.css')}}">
+    <script defer src="{{url_for('static',filename='../static/js/homepage/homepage.js')}}"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="{{url_for('home')}}">Explora</a></div>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="{{url_for('explore')}}">Explore Destinations</a></li>
+                    <li><a href="{{ url_for('plan_trip')}}">Plan Your Trip</a></li>
+                    <li><a href="{{url_for('cost_estimation')}}">Cost Estimate</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                </ul>
+            </div>
+            {% if not user.is_authenticated: %}
+                        <a href="{{ url_for('login')}}" class="btn">LOGIN</a>
+                        <a href="{{ url_for('register')}}" class="btn">REGISTER</a>
+            {% else: %}
+                        <div class="nav-right">
+                              <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+                              <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+                          <span class="user-name">
+                            <i class="fas fa-user-circle"></i> {{ user.name }}
+                          </span>
+                        </div>
+
+            {% endif %}
+        </div>
+    </nav>
+<div class="allContent">
+    <section id="trip-form">
+        <label for="location">Select Location:</label>
+        <select id="location">
+            <option value="">-- Select Location --</option>
+            <option value="pune">Pune</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="agra">Agra</option>
+            <option value="jaipur">Jaipur</option>
+        </select>
+
+        <button id="open-preferences">Select Preferences</button>
+
+        <div id="preferences-form" class="hidden">
+            <h3>Select Preferences</h3>
+            <div class="preferences-container">
+                <input type="checkbox" class="preference" id="historical" value="historical">
+                <label for="historical">Historical & Heritage Sites 🏛️📜</label>
+
+                <input type="checkbox" class="preference" id="nature" value="nature">
+                <label for="nature">Nature & Scenic Beauty 🌿🏞️</label>
+
+                <input type="checkbox" class="preference" id="adventure" value="adventure">
+                <label for="adventure">Adventure & Trekking ⛰️🚶‍♂️</label>
+
+                <input type="checkbox" class="preference" id="food" value="food">
+                <label for="food">Food & Culinary Experiences 🍽️😋</label>
+
+                <input type="checkbox" class="preference" id="religious" value="religious">
+                <label for="religious">Religious & Spiritual Places 🛕☪️</label>
+
+                <input type="checkbox" class="preference" id="wildlife" value="wildlife">
+                <label for="wildlife">Wildlife & Parks 🦜🐍</label>
+
+                <input type="checkbox" class="preference" id="shopping" value="shopping">
+                <label for="shopping">Shopping & Cultural Experiences 🛍️🎭</label>
+
+                <input type="checkbox" class="preference" id="modern" value="modern">
+                <label for="modern">Urban & Modern Attractions 🌆🏙️</label>
+
+                <input type="checkbox" class="preference" id="bollywood" value="bollywood">
+                <label for="bollywood">Bollywood & Entertainment 🎥🎭</label>
+            </div>
+            <button id="save-preferences">Save Preferences</button>
+        </div>
+    </section>
+
+    <section id="recommended-places">
+        <h2>Recommended Destinations</h2>
+        <div id="places-list">
+            <!-- Static Cards -->
+            <div id="destinations-content">
+
+
+            </div>
+        </div>
+    </section>
+</div>
+    <script src="{{url_for('static',filename='../static/js/plan-your-trip/plan-your-trip.js')}}"></script>
+</body>
+
+</html>

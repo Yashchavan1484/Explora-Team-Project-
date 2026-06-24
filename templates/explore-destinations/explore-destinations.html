@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/homepage/homepage.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/explore-destinations/explore-destinations.css')}}">
+    <title>EXPLORE.DESTINATIONS</title>
+</head>
+
+<body class="destinations-body">
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="{{url_for('home')}}">Explora</a></div>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="{{url_for('explore')}}">Explore Destinations</a></li>
+                    <li><a href="{{ url_for('plan_trip')}}">Plan Your Trip</a></li>
+                    <li><a href="{{url_for('cost_estimation')}}">Cost Estimate</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                </ul>
+            </div>
+            {% if not user.is_authenticated: %}
+                        <a href="{{ url_for('login')}}" class="btn">LOGIN</a>
+                        <a href="{{ url_for('register')}}" class="btn">REGISTER</a>
+            {% else: %}
+                        <div class="nav-right">
+                              <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+                              <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+                          <span class="user-name">
+                            <i class="fas fa-user-circle"></i> {{ user.name }}
+                          </span>
+                        </div>
+
+            {% endif %}
+        </div>
+    </nav>
+    <div class="h1-box">
+        <div class="destination-content-2">
+            <h1 class="first-h1">EXPLORE DESTINATIONS</h1>
+            <h1 class="second-h1">DISCOVER YOUR DREAM DESTINATION</h1>
+        </div>
+    </div>
+    <section class="destinations">
+
+        <div class="destination-grid">
+            {% for i in pune_list %}
+            <div class="destination-card" style="background-image: url('{{pune[i]["img_url"]}}');">
+                <div class="card-content">
+                    <h3>{{ i }}</h3>
+                    <a href="{{url_for('destination_detail', place='Pune', name=i)}}" class="learn-more">Explore →</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for i in mumbai_list %}
+            <div class="destination-card" style="background-image: url('{{mumbai[i]["img_url"]}}');">
+                <div class="card-content">
+                    <h3>{{ i }}</h3>
+                    <a href="{{url_for('destination_detail', place='Mumbai', name=i)}}" class="learn-more">Explore →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Explora</h3>
+      <p>Your go-to platform for unforgettable travel experiences. Discover hidden gems, plan smart, and travel inspired!</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="{{url_for('explore')}}">Destinations</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@explora.com</p>
+      <p>Phone: +91-9876543210</p>
+      <p>Location: Pune, Maharashtra, India</p>
+    </div>
+
+    <div class="social-section">
+  <h2>Follow Us</h2>
+  <div class="social-icons">
+    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-youtube"></i>
+  </div>
+</div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Explora. All rights reserved.</p>
+  </div>
+</footer>
+    </div>
+    <script src="{{url_for('static',filename='static/js/explore-destinations.js')}}"></script>
+</body>
+
+</html>

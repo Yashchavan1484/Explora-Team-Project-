@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOMEPAGE.EXPLORA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/homepage/homepage.css')}}">
+</head>
+
+<body>
+    <div class="hero-section">
+        <div class="hero-body">
+
+            <header class="hero">
+                <nav class="navbar">
+                    <div class="nav-container">
+                        <div class="logo"><a href="{{url_for('home')}}">Explora</a></div>
+                        <div class="nav-links-container">
+                            <ul class="nav-links">
+                                <li><a href="{{url_for('explore')}}">Explore Destinations</a>
+                                </li>
+                                <li><a href="{{ url_for('plan_trip')}}">Plan Your Trip</a></li>
+                                <li><a href="{{url_for('cost_estimation')}}">Cost Estimate</a></li>
+                                <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        {% if not user.is_authenticated: %}
+                        <a href="{{ url_for('login')}}" class="btn">LOGIN</a>
+                        <a href="{{ url_for('register')}}" class="btn">REGISTER</a>
+                        {% else: %}
+                         <div class="nav-right">
+                              <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+                              <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+                          <span class="user-name">
+                            <i class="fas fa-user-circle"></i> {{ user.name }}
+                          </span>
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+                </nav>
+                <div class="hero-content">
+                    <h1>IT'S TIME TO EXPLORE</h1>
+                    <h2>DISCOVER <span>UNIQUE</span> TRAVEL EXPERIENCES WITH EXPLORA</h2>
+                    <a href="{{url_for('explore')}}" class="cta-btn">EXPLORE →</a>
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <div class="plane-container">
+        <img src="{{url_for('static',filename='assets/images/other-images/planeimg.png')}}" alt="Plane" class="plane">
+    </div>
+    <div class="dotted-line"></div> <br><br><br>
+    <h2 class="section-heading">Popular Destinations</h2>
+    <section class="cards-section">
+
+  <div class="travel-card">
+    <div class="card-container">
+      <div class="card-image">
+        <img src="static/assets/images/other-images/rajgad-buruj.jpg" alt="Rajgad Fort" class="destination-image" />
+      </div>
+      <div class="card-content">
+        <div class="barcode-section"><div class="barcode"></div></div>
+        <div class="text-content">
+          <h2>RAJGAD FORT</h2>
+          <p>Rajgad Fort, meaning "King's Fort," was the first capital of the Maratha Empire...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="travel-card">
+    <div class="card-container">
+      <div class="card-image">
+        <img src="{{pune['Aga Khan Palace']['img_url']}}" alt="Aga Khan Palace" class="destination-image" />
+      </div>
+      <div class="card-content">
+        <div class="barcode-section"><div class="barcode"></div></div>
+        <div class="text-content">
+          <h2>AGA KHAN PALACE</h2>
+          <p>The Aga Khan Palace was constructed by Sultan Muhammed Shah Aga Khan III...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="travel-card">
+    <div class="card-container">
+      <div class="card-image">
+        <img src="{{mumbai['Chhatrapati Shivaji Maharaj Terminus (CSMT)']['img_url']}}" alt="CSMT" class="destination-image" />
+      </div>
+      <div class="card-content">
+        <div class="barcode-section"><div class="barcode"></div></div>
+        <div class="text-content">
+          <h2>Chhatrapati Shivaji Maharaj Terminus (CSMT)</h2>
+          <p>{{mumbai['Chhatrapati Shivaji Maharaj Terminus (CSMT)']['brief_information']}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="travel-card">
+    <div class="card-container">
+      <div class="card-image">
+        <img src="static/assets/images/other-images/elephanta_caves.jpg" alt="Elephanta Caves" class="destination-image" />
+      </div>
+      <div class="card-content">
+        <div class="barcode-section"><div class="barcode"></div></div>
+        <div class="text-content">
+          <h2>Elephanta Caves</h2>
+          <p>{{mumbai['Elephanta Caves']['brief_information']}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+    <h2 class="section-heading">Unforgettable Experiences</h2>
+<!-- Culinary Delights (image left, text right) -->
+<section class="feature-section image-left theme-culinary">
+  <div class="feature-image">
+    <img src="static/assets/images/other-images/culinary.jpg" alt="Culinary Delights">
+  </div>
+  <div class="feature-text">
+    <h2>Culinary Delights</h2>
+    <p>Indulge in a flavorful journey across local and exotic cuisines. From spicy street food to gourmet dishes, experience the true essence of culture through every bite.</p>
+  </div>
+</section>
+
+<!-- Rich Culture (image right, text left) -->
+<section class="feature-section image-right theme-culture">
+  <div class="feature-image">
+    <img src="static/assets/images/other-images/culture.jpg" alt="Rich Culture">
+  </div>
+  <div class="feature-text">
+    <h2>Rich Culture</h2>
+    <p>Explore the vibrant traditions and cultural heritage of our destinations. Witness festivals, rituals, and crafts that bring stories and communities to life.</p>
+  </div>
+</section>
+
+<!-- Thrilling Adventures (image left, text right) -->
+<section class="feature-section image-left theme-adventure">
+  <div class="feature-image">
+    <img src="static/assets/images/other-images/adventure.png" alt="Thrilling Adventures">
+  </div>
+  <div class="feature-text">
+    <h2>Thrilling Adventures</h2>
+    <p>Embark on breathtaking journeys across mountains, rivers, and more. From trekking through rugged terrains to exploring nature's marvels, we’ve got adventure in every step.</p>
+  </div>
+</section>
+
+<!-- Historical Sites (image right, text left) -->
+<section class="feature-section image-right theme-history">
+  <div class="feature-image">
+    <img src="static/assets/images/other-images/history.jpg" alt="Historical Sites">
+  </div>
+  <div class="feature-text">
+    <h2>Historical Sites</h2>
+    <p>Visit historical wonders and learn about our incredible past. From majestic forts to ancient architecture, each site tells a unique story of time.</p>
+  </div>
+</section>
+
+   <div class="testimonials">
+  <h2 class="section-heading">What travelers say!!</h2>
+
+  <div class="testimonial-grid">
+
+    <div class="testimonial-card">
+      <div class="testimonial-header">
+        <img src="static/assets/images/other-images/user.jpg" alt="User 1" class="testimonial-avatar" />
+        <div class="testimonial-user-info">
+          <span class="testimonial-name">David R.</span>
+          <span class="testimonial-location">Traveled to Japan</span>
+        </div>
+      </div>
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">
+        "The attention to detail was impressive. The cherry blossom tour exceeded all expectations – a truly once-in-a-lifetime experience!"
+      </div>
+      <div class="testimonial-date">April 2023</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-header">
+        <img src="static/assets/images/other-images/user.jpg" alt="User 2" class="testimonial-avatar" />
+        <div class="testimonial-user-info">
+          <span class="testimonial-name">Priya Sharma</span>
+          <span class="testimonial-location">Traveled to Kerala</span>
+        </div>
+      </div>
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">
+        "An unforgettable experience! Loved every part of the journey. Explora made it so easy and special."
+      </div>
+      <div class="testimonial-date">June 2023</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-header">
+        <img src="static/assets/images/other-images/user.jpg" alt="User 3" class="testimonial-avatar" />
+        <div class="testimonial-user-info">
+          <span class="testimonial-name">Arjun Mehta</span>
+          <span class="testimonial-location">Traveled to Ladakh</span>
+        </div>
+      </div>
+      <div class="testimonial-stars">★★★★☆</div>
+      <div class="testimonial-text">
+        "Beautiful destinations and top-notch planning by Explora. The itinerary was well thought out."
+      </div>
+      <div class="testimonial-date">August 2023</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-header">
+        <img src="static/assets/images/other-images/user.jpg" alt="User 4" class="testimonial-avatar" />
+        <div class="testimonial-user-info">
+          <span class="testimonial-name">Sara Khan</span>
+          <span class="testimonial-location">Traveled to Rajasthan</span>
+        </div>
+      </div>
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">
+        "Perfect blend of adventure and culture. Highly recommended for those wanting a unique getaway."
+      </div>
+      <div class="testimonial-date">December 2023</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+    <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Explora</h3>
+      <p>Your go-to platform for unforgettable travel experiences. Discover hidden gems, plan smart, and travel inspired!</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="{{url_for('explore')}}">Destinations</a></li>
+        <li><a href="{{url_for('contact')}}">Contact</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@explora.com</p>
+      <p>Phone: +91-9876543210</p>
+      <p>Location: Pune, Maharashtra, India</p>
+    </div>
+
+    <div class="social-section">
+  <h2>Follow Us</h2>
+  <div class="social-icons">
+    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-youtube"></i>
+  </div>
+</div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Explora. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script src="{{url_for('static',filename='js/homepage/homepage.js')}}"></script>
+
+</body>
+
+</html>

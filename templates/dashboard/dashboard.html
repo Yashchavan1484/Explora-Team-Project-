@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      <link rel="stylesheet" href="{{url_for('static',filename='css/homepage/homepage.css')}}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/dashboard.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 80px;
+            height: calc(100vh - 100px);
+        }
+
+        .sidebar {
+            flex: 3;
+            height: 100%;
+            overflow-y: auto;
+            order: 1;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .main-content {
+            flex: 7;
+            height: 100%;
+            order: 2;
+        }
+
+        .map-container {
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .place-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .place-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+
+        .delete-btn:hover {
+            color: #cc0000;
+        }
+
+        .place-image {
+            width: 80px;
+            height: 60px;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .property-info h6 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .property-info p {
+            margin: 3px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="{{ url_for('home') }}">Explora</a></div>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('explore') }}">Explore Destinations</a></li>
+                    <li><a href="{{ url_for('plan_trip') }}">Plan Your Trip</a></li>
+                    <li><a href="{{ url_for('cost_estimation') }}">Cost Estimate</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <ul class="place-list" id="place-list">
+                {% for dest in destination: %}
+                <li class="place-item" data-lat="{{ data[dest.place][dest.name]['latitude'] }}" data-lng="{{data[dest.place][dest.name]['longitude']}}" data-name="{{ dest.name }}">
+
+                    <button class="delete-btn" title="Delete location">
+                        <a href="{{url_for('delete',dest_id = dest.id)}}">
+                            <i class='bx bx-x'></i>
+                        </a>
+                    </button>
+                    <img src="{{ data[dest.place][dest.name]['img_url'] }}" class="place-image" alt="New York">
+                    <div class="property-info">
+                        <h6>{{ dest.name }}</h6>
+                        <p>{{ dest.place }}</p>
+                        {% if dest.name == "Shaniwar Wada"%}
+                        <p>
+                                Crowd status:
+                            {% if model.count_humans('static/assets/images/crowd_images/shaniwar_wada_1.jpg') >= 15 %}
+                            Heavly crowded
+                            {%else:%}
+                                Not crowded
+                            {% endif %}
+                        </p>
+                        {% elif dest.name == "Chor Bazaar"%}
+                        <p>
+                            Crowd Status:
+                            {% if model.count_humans('static/assets/images/crowd_images/chor1.jpg') >= 10: %}
+                            Heavly crowded
+                            {% else: %}
+                                Not crowed
+                            {% endif %}
+                        </p>
+                        {% endif %}
+
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([40.7128, -74.0060], 3);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Store markers
+        let markers = {};
+
+        // Function to add markers
+        function addMarker(item) {
+            const lat = parseFloat(item.dataset.lat);
+            const lng = parseFloat(item.dataset.lng);
+            const name = item.dataset.name;
+
+            const marker = L.marker([lat, lng]).addTo(map);
+            marker.bindPopup(`<b>${name}</b>`);
+            markers[name] = marker;
+
+            item.addEventListener('click', (e) => {
+                if (!e.target.closest('.delete-btn')) {
+                    map.setView([lat, lng], 14);
+                    marker.openPopup();
+                }
+            });
+        }
+
+        // Initialize existing markers
+        document.querySelectorAll('.place-item').forEach(addMarker);
+
+        // Delete functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.delete-btn')) {
+                const listItem = e.target.closest('.place-item');
+                const placeName = listItem.dataset.name;
+
+                if (confirm(`Are you sure you want to delete ${placeName}?`)) {
+                    // Remove from map
+                    if (markers[placeName]) {
+                        map.removeLayer(markers[placeName]);
+                        delete markers[placeName];
+                    }
+                    // Remove from list
+                    listItem.remove();
+                }
+            }
+        });
+
+    </script>
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Explora</h3>
+      <p>Your go-to platform for unforgettable travel experiences. Discover hidden gems, plan smart, and travel inspired!</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="{{url_for('explore')}}">Destinations</a></li>
+        <li><a href="{{url_for('contact')}}">Contact</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@explora.com</p>
+      <p>Phone: +91-9876543210</p>
+      <p>Location: Pune, Maharashtra, India</p>
+    </div>
+
+    <div class="social-section">
+  <h2>Follow Us</h2>
+  <div class="social-icons">
+    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-youtube"></i>
+  </div>
+</div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Explora. All rights reserved.</p>
+  </div>
+</footer>
+</body>
+</html>

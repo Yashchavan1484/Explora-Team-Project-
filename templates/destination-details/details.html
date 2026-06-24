@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Details</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='../static/css/destinations-details/details.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='../static/css/homepage/homepage.css')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Winky+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Winky Sans', sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 80px auto 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .image-container {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .image-container img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+        .add-btn {
+            background-color: darkorange;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto 0;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .location, .description {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .flash-message {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background: darkorange;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { top: -50px; }
+            to { top: 80px; }
+        }
+    </style>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="{{url_for('home')}}">Explora</a></div>
+            <div class="nav-links-container">
+                <ul class="nav-links">
+                    <li><a href="{{url_for('explore')}}">Explore Destinations</a></li>
+                    <li><a href="{{ url_for('plan_trip')}}">Plan Your Trip</a></li>
+                    <li><a href="{{url_for('cost_estimation')}}">Cost Estimate</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                </ul>
+            </div>
+            {% if not user.is_authenticated: %}
+                        <a href="{{ url_for('login')}}" class="btn">LOGIN</a>
+                        <a href="{{ url_for('register')}}" class="btn">REGISTER</a>
+            {% else: %}
+                        <div class="nav-right">
+                              <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+                              <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+                          <span class="user-name">
+                            <i class="fas fa-user-circle"></i> {{ user.name }}
+                          </span>
+                        </div>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        <h1 id="destination-title">{{ name.capitalize() }}</h1>
+        <div class="image-container">
+            <img id="destination-image" src="{{detail['img_url']}}" alt="Destination Image">
+        </div>
+        <p class="location"><strong>Location: {{ name.capitalize() }}</strong></p>
+        <p class="description" id="destination-description">
+            {{detail["brief_information"]}}
+            <br><br>
+            <b>Timings: </b>{{detail["timings"]}}<br><br>
+            <b>Location:</b> <a href="{{detail["location_link"]}}" target="_blank">Google Maps</a><br><br>
+            <b>Entry Fees:</b> {{detail["entry_fee"]}}
+        </p>
+        <button class="add-btn" onclick="addDestination()">
+            <a href="{{ url_for('add_place', name=name, place=place) }}" class="add-btn">
+            + Add Destination
+        </a>
+        </button>
+    </div>
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-about">
+      <h3>Explora</h3>
+      <p>Your go-to platform for unforgettable travel experiences. Discover hidden gems, plan smart, and travel inspired!</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="{{url_for('explore')}}">Destinations</a></li>
+        <li><a href="{{url_for('contact')}}">Contact</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@explora.com</p>
+      <p>Phone: +91-9876543210</p>
+      <p>Location: Pune, Maharashtra, India</p>
+    </div>
+
+    <div class="social-section">
+  <h2>Follow Us</h2>
+  <div class="social-icons">
+    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-youtube"></i>
+  </div>
+</div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Explora. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

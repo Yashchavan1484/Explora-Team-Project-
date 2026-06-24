@@ -1,0 +1,156 @@
+.allContent{
+    background-color: #f8f8f8;
+    padding-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Trip Form */
+#trip-form {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+#trip-form label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#trip-form select,
+#trip-form .preferences {
+    margin: 10px 0;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#trip-form .preferences {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#trip-form .preferences label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: normal;
+}
+
+#trip-form button {
+    background-color: #ff7f50; /* Orange */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#trip-form button:hover {
+    background-color: #ff6347; /* Darker Orange */
+    transform: scale(1.05);
+}
+
+/* Recommended Places Section */
+#recommended-places {
+    margin-top: 20px;
+}
+
+#recommended-places h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#places-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+.main {
+    background-color: #f8f8f8;
+}
+.plan-container{
+    background-color: #ffffff; /* Orange */
+    opacity: 0.1;
+    color: rgb(18, 1, 1);
+    position: relative;
+    top: 80px;
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 30px;
+    }
+    .destination-content-2{
+        position: relative;
+        left: 20px;
+        padding-top: 100px;
+    }
+    .first-h1{
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+    }
+    .second-h1{
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+        color: blue
+    }
+    .h1-box{
+        background-color: rgb(255, 255, 255);
+        width: 98%;
+        padding: 20px;
+        position: relative;
+        left: 10px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    
+    }
+    .destinations-body{
+        background-color: rgb(182, 217, 216);
+    }
+    .hidden {
+        display: none;
+    }
+    
+    #preferences-form {
+        border: 1px solid #ccc;
+        padding: 15px;
+        background: #f9f9f9;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    
+    .preferences-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .hidden {
+        display: none;
+    }
+
+    #preferences-form {
+        border: 1px solid #ccc;
+        padding: 15px;
+        background: #f9f9f9;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    .preferences-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }

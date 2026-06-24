@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost.Estimator</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/homepage/homepage.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='../static/css/cost-estimate/cost-estimate.css')}}">
+</head>
+<body>
+    <nav class="navbar">
+                    <div class="nav-container">
+                        <div class="logo"><a href="{{url_for('home')}}">Explora</a></div>
+                        <div class="nav-links-container">
+                            <ul class="nav-links">
+                                <li><a href="{{url_for('explore')}}">Explore Destinations</a>
+                                </li>
+                                <li><a href="{{ url_for('plan_trip')}}">Plan Your Trip</a></li>
+                                <li><a href="{{url_for('cost_estimation')}}">Cost Estimate</a></li>
+                                <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        {% if not user.is_authenticated: %}
+                        <a href="{{ url_for('login')}}" class="btn">LOGIN</a>
+                        <a href="{{ url_for('register')}}" class="btn">REGISTER</a>
+                        {% else: %}
+                         <div class="nav-right">
+                              <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+                              <a href="{{ url_for('logout') }}" class="btn">LOGOUT</a>
+                          <span class="user-name">
+                            <i class="fas fa-user-circle"></i> {{ user.name }}
+                          </span>
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+                </nav>
+    <div class="cost-container">
+        <h1>Travel Cost Estimator</h1>
+        <form id="cost-form">
+            <label for="destination">Destination:</label>
+            <select id="destination">
+                <option value="pune">Pune</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="delhi">Delhi</option>
+                <option value="goa">Goa</option>
+            </select>
+
+            <label for="days">Duration (Days):</label>
+            <input type="number" id="days" min="1" value="3">
+
+            <label>Travel Type:</label>
+            <div class="radio-group">
+                <input type="radio" name="travel-type" value="solo" checked> Solo
+                <input type="radio" name="travel-type" value="couple"> Couple
+                <input type="radio" name="travel-type" value="family"> Family
+                <input type="radio" name="travel-type" value="group"> Group
+            </div>
+
+            <label>Include Costs for:</label>
+            <div class="checkbox-group">
+                <input type="checkbox" value="flight" checked> Flight
+                <input type="checkbox" value="hotel" checked> Hotel
+                <input type="checkbox" value="food" checked> Food
+                <input type="checkbox" value="transport" checked> Transport
+                <input type="checkbox" value="activities"> Activities
+            </div>
+
+            <button type="button" onclick="calculateCost()">Calculate Estimate</button>
+        </form>
+
+        <div id="cost-results">
+            <h2>Estimated Cost</h2>
+            <p id="breakdown"></p>
+            <h3 id="total-cost">Total: $0</h3>
+        </div>
+    </div>
+
+    <script src="url_for('static',filename='../static/js/cost-estimate.js')}}"></script>
+</body>
+</html>

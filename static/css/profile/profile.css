@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(224, 238, 251);
+}
+
+.profile-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    color: rgb(0, 0, 0);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-pic {
+    position: relative;
+    margin-bottom: 20px;
+    width: 200px;
+    height: 200px;
+    border: 3px solid black;
+    border-radius: 50%;
+    background: url(./dream\ adventure\ imag\ e.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.edit-btn {
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: relative;
+    top: -20px;
+    left: 40px;
+}
+
+.nav-links a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    margin: 10px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background: white;
+    overflow-y: auto;
+}
+
+.current-plan,
+.previous-trips,
+.wishlist {
+    margin-bottom: 20px;
+    background-color: rgb(224, 238, 251);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px rgba(34, 7, 7, 0.3);
+}
+
+.trip-gallery {
+    display: flex;
+    gap: 10px;
+}
+
+.trip img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: black;
+    color: white;
+}
+
+#user-bio {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.nav-links a:hover {
+    transform: scale(1.1);
+    text-shadow: 0cap 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    height: 100vh;
+    box-shadow: 0cap 0px 1px;
+    background-color: rgb(197, 221, 242);
+}
